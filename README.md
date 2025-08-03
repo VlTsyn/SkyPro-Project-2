@@ -8,7 +8,7 @@
 
 1. Клонируйте репозиторий:
 ```
-
+https://github.com/VlTsyn/SkyPro-Project-2.git
 ```
 2. Установите зависимости:
 ```
