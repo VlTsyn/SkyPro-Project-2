@@ -17,6 +17,14 @@ def test_product(test_list_products):
     assert test_list_products[0].quantity == 5
 
 
+def test_str_method(test_list_products):
+    assert str(test_list_products[0]) == "Samsung Galaxy S23 Ultra, 180000.0 руб. Остаток: 5 шт."
+
+
+def test_add_method(test_list_products):
+    result = test_list_products[0] + test_list_products[1]
+    assert result == 2580000.0
+
 
 @pytest.fixture
 def category_smartphones(test_list_products):
@@ -33,6 +41,12 @@ def test_category(category_smartphones):
  "Xiaomi Redmi Note 11, 31000.0 руб. Остаток: 14 шт.\n"]
     assert category_smartphones.category_count == 1
     assert category_smartphones.product_count == 3
+    Category.category_count = 0
+    Category.product_count = 0
+
+
+def test_str_category(category_smartphones):
+    assert str(category_smartphones) == "Смартфоны, количество продуктов 27 шт."
     Category.category_count = 0
     Category.product_count = 0
 
