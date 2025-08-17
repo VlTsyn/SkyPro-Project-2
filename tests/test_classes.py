@@ -40,6 +40,11 @@ def test_error_add_product(test_product_phones_grasses):
         result_1 + result_2
 
 
+def test_mixin_log(capsys):
+    product = Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
+    assert capsys.readouterr().out == "Product('Samsung Galaxy S23 Ultra', '256GB, Серый цвет, 200MP камера', 180000.0, 5)\n"
+
+
 @pytest.fixture
 def category_smartphones(test_list_products):
     return Category("Смартфоны",
