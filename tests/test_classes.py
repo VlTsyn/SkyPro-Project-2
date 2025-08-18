@@ -1,5 +1,5 @@
 import pytest
-from src.classes import Product, Category
+from src.classes import Product, Category, Smartphone, LawnGrass
 
 
 @pytest.fixture
@@ -24,6 +24,20 @@ def test_str_method(test_list_products):
 def test_add_method(test_list_products):
     result = test_list_products[0] + test_list_products[1]
     assert result == 2580000.0
+
+
+@pytest.fixture
+def test_product_phones_grasses():
+    phone_1 = Smartphone("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5, 95.5,
+                         "S23 Ultra", 256, "Серый")
+    grass_1 = LawnGrass("Газонная трава", "Элитная трава для газона", 500.0, 20, "Россия", "7 дней", "Зеленый")
+    return phone_1, grass_1
+
+
+def test_error_add_product(test_product_phones_grasses):
+    with pytest.raises(TypeError) as e:
+        result_1, result_2 = test_product_phones_grasses
+        result_1 + result_2
 
 
 @pytest.fixture
@@ -96,3 +110,8 @@ def test_price_setter(testing_product):
     assert testing_product.price == 800
     testing_product.price = -100
     assert testing_product.price == 800
+
+
+def test_error_add_category_product(category_smartphones):
+    with pytest.raises(TypeError) as e:
+        category_smartphones.add_product("Nothing")
