@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 
 
 class BaseProduct(ABC):
+    """Базовый абстрактный класс для продуктов"""
 
     @abstractmethod
     def new_product(self, product):
@@ -13,17 +14,18 @@ class BaseProduct(ABC):
 
 
 class MixinLog:
+    """Класс логирования при инициализации объекта"""
 
     def __init__(self):
         self.order_log()
         super().__init__()
-
 
     def order_log(self):
         print(f"{self.__class__.__name__}('{self.name}', '{self.description}', {self.price}, {self.quantity})")
 
 
 class Product(MixinLog, BaseProduct):
+    """Родительский класс для продуктов"""
     name: str
     description: str
     __price: float
@@ -61,7 +63,9 @@ class Product(MixinLog, BaseProduct):
         else:
             print("Цена не должна быть нулевая или отрицательная")
 
+
 class Category:
+    """Класс для категорий"""
     name: str
     description: str
     __products: list
@@ -73,7 +77,7 @@ class Category:
         self.description = description
         self.__products = products
         self.product_count = len(products)
-        Category.category_count +=1
+        Category.category_count += 1
         Category.product_count += len(products)
 
     def __str__(self):
@@ -99,12 +103,13 @@ class Category:
 
 
 class Smartphone(Product):
+    """Подкласс продуктов смартфонов"""
     efficiency: float
     model: str
     memory: float
     color: str
 
-    def __init__(self,name, description, price, quantity, efficiency, model, memory, color):
+    def __init__(self, name, description, price, quantity, efficiency, model, memory, color):
         super().__init__(name, description, price, quantity)
         self.efficiency = efficiency
         self.model = model
@@ -113,11 +118,12 @@ class Smartphone(Product):
 
 
 class LawnGrass(Product):
+    """Подкласс продуктов газонной травы"""
     country: str
     germination_period: str
     color: str
 
-    def __init__(self,name, description, price, quantity, country, germination_period, color):
+    def __init__(self, name, description, price, quantity, country, germination_period, color):
         super().__init__(name, description, price, quantity)
         self.country = country
         self.germination_period = germination_period
