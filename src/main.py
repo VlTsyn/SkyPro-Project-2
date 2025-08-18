@@ -1,4 +1,4 @@
-from src.classes import Product, Category
+from src.classes import Product, Category, Smartphone
 
 
 if __name__ == '__main__':
@@ -43,3 +43,15 @@ if __name__ == '__main__':
 
     print(Category.category_count)
     print(Category.product_count)
+
+    data = {'name': 'a',
+            'description': 'b',
+            'price': 1,
+            'quantity': 2,
+            'efficiency': 123.45,
+            'model': 'c',
+            'memory': 256.0,
+            'color': 'd'
+            }
+    telephone = Smartphone.new_product(data)
+    print(telephone)

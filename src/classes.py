@@ -4,7 +4,11 @@ from abc import ABC, abstractmethod
 class BaseProduct(ABC):
 
     @abstractmethod
-    def __init__(self):
+    def new_product(self, product):
+        pass
+
+    @abstractmethod
+    def price(self):
         pass
 
 
@@ -44,11 +48,7 @@ class Product(MixinLog, BaseProduct):
 
     @classmethod
     def new_product(cls, product):
-        name = product["name"]
-        description = product["description"]
-        price = product["price"]
-        quantity = product["quantity"]
-        return cls(name, description, price, quantity)
+        return cls(**product)
 
     @property
     def price(self):
