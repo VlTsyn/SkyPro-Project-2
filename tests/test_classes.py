@@ -1,5 +1,6 @@
 import pytest
-from src.classes import Product, Category, Smartphone, LawnGrass
+
+from src.classes import Category, LawnGrass, Product, Smartphone
 
 
 @pytest.fixture
@@ -28,8 +29,9 @@ def test_add_method(test_list_products):
 
 @pytest.fixture
 def test_product_phones_grasses():
-    phone_1 = Smartphone("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5, 95.5,
-                         "S23 Ultra", 256, "Серый")
+    phone_1 = Smartphone(
+        "Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5, 95.5, "S23 Ultra", 256, "Серый"
+    )
     grass_1 = LawnGrass("Газонная трава", "Элитная трава для газона", 500.0, 20, "Россия", "7 дней", "Зеленый")
     return phone_1, grass_1
 
@@ -40,19 +42,34 @@ def test_error_add_product(test_product_phones_grasses):
         result_1 + result_2
 
 
+def test_mixin_log(capsys):
+    product = Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
+    assert (
+        capsys.readouterr().out
+        == "Product('Samsung Galaxy S23 Ultra', '256GB, Серый цвет, 200MP камера', 180000.0, 5)\n"
+    )
+
+
 @pytest.fixture
 def category_smartphones(test_list_products):
-    return Category("Смартфоны",
-                         "Смартфоны, как средство не только коммуникации, но и получения дополнительных функций для удобства жизни",
-                         [test_list_products[0], test_list_products[1], test_list_products[2]])
+    return Category(
+        "Смартфоны",
+        "Смартфоны, как средство не только коммуникации, но и получения дополнительных функций для удобства жизни",
+        [test_list_products[0], test_list_products[1], test_list_products[2]],
+    )
 
 
 def test_category(category_smartphones):
     assert category_smartphones.name == "Смартфоны"
-    assert category_smartphones.description == "Смартфоны, как средство не только коммуникации, но и получения дополнительных функций для удобства жизни"
-    assert category_smartphones.products == ["Samsung Galaxy S23 Ultra, 180000.0 руб. Остаток: 5 шт.\n",
- "Iphone 15, 210000.0 руб. Остаток: 8 шт.\n",
- "Xiaomi Redmi Note 11, 31000.0 руб. Остаток: 14 шт.\n"]
+    assert (
+        category_smartphones.description
+        == "Смартфоны, как средство не только коммуникации, но и получения дополнительных функций для удобства жизни"
+    )
+    assert category_smartphones.products == [
+        "Samsung Galaxy S23 Ultra, 180000.0 руб. Остаток: 5 шт.\n",
+        "Iphone 15, 210000.0 руб. Остаток: 8 шт.\n",
+        "Xiaomi Redmi Note 11, 31000.0 руб. Остаток: 14 шт.\n",
+    ]
     assert category_smartphones.category_count == 1
     assert category_smartphones.product_count == 3
     Category.category_count = 0
@@ -67,12 +84,14 @@ def test_str_category(category_smartphones):
 
 @pytest.fixture
 def category_tvs():
-    return Category("Телевизоры",
-                         "Современный телевизор, который позволяет наслаждаться просмотром, станет вашим другом и помощником",
-                         ["TV1"])
+    return Category(
+        "Телевизоры",
+        "Современный телевизор, который позволяет наслаждаться просмотром, станет вашим другом и помощником",
+        ["TV1"],
+    )
 
 
-def test_counts(category_smartphones,category_tvs):
+def test_counts(category_smartphones, category_tvs):
     category_1 = category_smartphones
     category_2 = category_tvs
     assert Category.category_count == 2
@@ -83,16 +102,20 @@ def test_counts(category_smartphones,category_tvs):
 
 def test_add_product(category_smartphones):
     category_1 = category_smartphones
-    category_1.add_product(Product("55\" QLED 4K", "Фоновая подсветка", 123000.0, 7))
+    category_1.add_product(Product('55" QLED 4K', "Фоновая подсветка", 123000.0, 7))
     assert category_1.product_count == 4
-
 
 
 @pytest.fixture
 def testing_product():
     new_product = Product.new_product(
-        {"name": "Samsung Galaxy S23 Ultra", "description": "256GB, Серый цвет, 200MP камера", "price": 180000.0,
-         "quantity": 5})
+        {
+            "name": "Samsung Galaxy S23 Ultra",
+            "description": "256GB, Серый цвет, 200MP камера",
+            "price": 180000.0,
+            "quantity": 5,
+        }
+    )
     return new_product
 
 
