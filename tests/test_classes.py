@@ -11,6 +11,11 @@ def test_list_products():
     return product1, product2, product3
 
 
+def test_raise_with_value_error():
+    with pytest.raises(ValueError):
+        Product("Бракованный товар", "Неверное количество", 1000.0, 0)
+
+
 def test_product(test_list_products):
     assert test_list_products[0].name == "Samsung Galaxy S23 Ultra"
     assert test_list_products[0].description == "256GB, Серый цвет, 200MP камера"
@@ -37,13 +42,13 @@ def test_product_phones_grasses():
 
 
 def test_error_add_product(test_product_phones_grasses):
-    with pytest.raises(TypeError) as e:
+    with pytest.raises(TypeError):
         result_1, result_2 = test_product_phones_grasses
         result_1 + result_2
 
 
 def test_mixin_log(capsys):
-    product = Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
+    Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
     assert (
         capsys.readouterr().out
         == "Product('Samsung Galaxy S23 Ultra', '256GB, Серый цвет, 200MP камера', 180000.0, 5)\n"
@@ -136,5 +141,16 @@ def test_price_setter(testing_product):
 
 
 def test_error_add_category_product(category_smartphones):
-    with pytest.raises(TypeError) as e:
+    with pytest.raises(TypeError):
         category_smartphones.add_product("Nothing")
+
+
+def test_middle_price(category_smartphones):
+    result = category_smartphones.middle_price()
+    assert result == 140333.33
+
+
+def test_middle_price_zero_division():
+    empty_category = Category("Категория", "Пустая категория", [])
+    result = empty_category.middle_price()
+    assert result == 0
